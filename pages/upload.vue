@@ -1,7 +1,14 @@
 <template>
     <b-container class="mt-5">
+        <div v-if="errors.size">
+            <b-alert variant="danger" show>
+                {{ errors.size[0]}}
+            </b-alert>
+        </div>
         <div class="mb-4">
-            <app-uploader @onprocessfile="storeFile" />
+            <app-uploader @onprocessfile="storeFile"
+                        @validation="setValidationErrors"
+            />
         </div>
         <div>
             <h4>Tus videos</h4>
@@ -23,6 +30,11 @@ export default {
         AppFile,
         AppUploader
     },
+    data () {
+        return {
+            errors: {}
+        }
+    },
     mounted() {
         this.getFiles()
     },
@@ -31,7 +43,8 @@ export default {
             getFiles: 'files/getFiles'
         }),
         ...mapMutations({
-            addFile: 'files/ADD_FILES'
+            addFile: 'files/ADD_FILES',
+            incrementUsage: 'usage/INCREMENT_USAGE'
         }),
         async storeFile (file) {
             const response = await this.$axios.$post("api/files", {
@@ -41,6 +54,11 @@ export default {
             });
 
             this.addFile(response.data)
+            this.incrementUsage(file.fileSize)
+
+        },
+        setValidationErrors(errors) {
+            this.errors = errors;
         }
     },
     computed: {

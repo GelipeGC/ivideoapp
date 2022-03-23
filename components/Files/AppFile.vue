@@ -8,7 +8,7 @@
     </b-list-group-item>
 </template>
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapMutations } from 'vuex'
 export default {
     props: {
         file: {
@@ -20,8 +20,15 @@ export default {
         ...mapActions({
             deleteFileAction: 'files/deleteFile'
         }),
-        deleteFile () {
-            this.deleteFileAction(this.file.uuid);
+        ...mapMutations({
+            decrementUsage: 'usage/DECREMENT_USAGE'
+        }),
+        async deleteFile () {
+            if (window.confirm('Quieres eliminar este video?')) {
+                await this.deleteFileAction(this.file.uuid);
+                //reduce storage
+                this.decrementUsage(this.file.size)
+            }
         }
     }
 }

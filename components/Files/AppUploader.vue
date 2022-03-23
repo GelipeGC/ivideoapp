@@ -38,13 +38,14 @@ export default {
             },
             server: {
                 process: (fieldName, file, metadata, load, error, progress, abort) => {
+                    this.$emit('validation', {});
                     let formData = new FormData();
                     const source = this.$axios.CancelToken.source();
 
                     this.$axios.$post('/api/files/signed', {
                         name: metadata.fileInfo.name,
                         extension: metadata.fileInfo.extension,
-                        sixe: metadata.fileInfo.size
+                        size: metadata.fileInfo.size
                     }).then(response => {
                         file.additionalData = response.additionalData;
 
@@ -61,6 +62,11 @@ export default {
                             cancelToken: source.token
                         }).then(_ => load(`${response.additionalData.key}`));
 
+                    }).catch(e => {
+                        if (e.response.status === 422) {
+                            this.$emit('validation', e.response.data.errors);
+                        }
+                        abort()
                     });
 
                     return {

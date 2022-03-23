@@ -12,17 +12,22 @@
                         <b-nav-item to="/upload">Mis videos</b-nav-item>
                     </template>
                 </client-only>
-                <b-nav-item href="">Planes</b-nav-item>
+                <b-nav-item to="plans">Cambiar plan 🔼</b-nav-item>
             </b-navbar-nav>
             <client-only>
                 <b-navbar-nav class="ml-auto">
-                    <b-nav-item-dropdown right v-if="$auth.loggedIn">
-                        <template #button-content>
-                            {{ $auth.user.name}}
-                        </template>
-                        <b-dropdown-item href="">Mi cuenta</b-dropdown-item>
-                        <b-dropdown-item href="#" @click.prevent="logout">Cerrar Sesión</b-dropdown-item>
-                    </b-nav-item-dropdown>
+                    <template v-if="$auth.loggedIn">
+                        <b-nav-item>
+                            <app-usage></app-usage>
+                        </b-nav-item>
+                        <b-nav-item-dropdown right >
+                            <template #button-content>
+                                {{ $auth.user.name}}
+                            </template>
+                            <b-dropdown-item href="">Mi cuenta</b-dropdown-item>
+                            <b-dropdown-item href="#" @click.prevent="logout">Cerrar Sesión</b-dropdown-item>
+                        </b-nav-item-dropdown>
+                    </template>
                     <template v-if="!$auth.loggedIn">
                         <b-nav-item to="/login">Iniciar Sesión</b-nav-item>
                         <b-nav-item to="/register">Crear cuenta</b-nav-item>
@@ -36,7 +41,9 @@
 </template>
 
 <script>
+import AppUsage from './AppUsage.vue';
 export default {
+  components: { AppUsage },
 
     methods: {
         async logout() {
