@@ -1,5 +1,5 @@
 <template>
-    <b-list-group-item @click.prevent="upgradePlan" class="d-flex justify-content-between align-items-center plan-item">
+    <b-list-group-item @click="upgradePlan" class="d-flex justify-content-between align-items-center plan-item user-select-none">
         <div class="d-flex flex-column align-item-center">
             <span class="plan-name">{{ plan.name }}</span>
             <span class="plan-storage">{{ storageFormatted }}</span>
@@ -14,6 +14,11 @@ export default {
         plan: {
             required: true,
             type: Object
+        },
+        clickable: {
+            required: false,
+            type: Boolean,
+            default: true
         }
     },
     computed: {
@@ -23,6 +28,9 @@ export default {
     },
     methods: {
         upgradePlan() {
+            if (!this.clickable) {
+                return;
+            }
             this.$router.push({ name: 'checkout', query: { plan: this.plan.slug }})
         }
     }

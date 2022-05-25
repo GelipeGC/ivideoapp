@@ -5,9 +5,9 @@
             lead="Sube tus videos, compartelos y descargalos"
             fluid
         >
-            <b-button variant="primary">Comienza ya</b-button>
+            <b-button variant="primary" @click.prevent="handleClick">Comienza ya</b-button>
         </b-jumbotron>
-        <plans-list></plans-list>
+        <plans-list @cardClick="handleClick"></plans-list>
     </div>
 </template>
 
@@ -17,6 +17,13 @@ export default {
   name: 'IndexPage',
   components: {
       PlanList
-  }
+  },
+  methods: {
+      handleClick () {
+          if (!this.$auth.loggedIn) {
+              this.$router.push({'name': 'register'});
+          }
+      }
+  },
 }
 </script>

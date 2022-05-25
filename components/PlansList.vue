@@ -21,7 +21,7 @@
                             <b-list-group-item></b-list-group-item>
 
                         </b-list-group>
-                        <b-button variant="secondary">Quiero probar</b-button>
+                        <b-button variant="secondary" @click.prevent="$emit('cardClick')">Quiero probar</b-button>
                     </b-card>
                     <b-card
                         borderVariant="info"
@@ -40,7 +40,7 @@
                             <b-list-group-item></b-list-group-item>
 
                         </b-list-group>
-                        <b-button variant="info">Comprar ya</b-button>
+                        <b-button variant="info" @click.prevent="$emit('cardClick')">Comprar ya</b-button>
                     </b-card>
                     <b-card
                         borderVariant="primary"
@@ -59,7 +59,7 @@
                             <b-list-group-item></b-list-group-item>
 
                         </b-list-group>
-                        <b-button variant="primary">Comprar ya</b-button>
+                        <b-button variant="primary" @click.prevent="$emit('cardClick')">Comprar ya</b-button>
                     </b-card>
                 </b-card-group>
             </div>

@@ -9,7 +9,12 @@
 <script>
 import AppPlan from '../components/AppPlan.vue';
 export default {
-  components: { AppPlan },
+    head: {
+        title: "Planes",
+        lang: "es"
+    },
+    middleware: ['auth', 'canviewplanspage'],
+    components: { AppPlan },
     data () {
         return {
             plans: []

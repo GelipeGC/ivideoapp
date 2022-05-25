@@ -10,9 +10,9 @@
                 <client-only>
                     <template v-if="$auth.loggedIn">
                         <b-nav-item to="/upload">Mis videos</b-nav-item>
+                        <b-nav-item to="plans" v-if="!$auth.user.subscribed">Upgrade 🔼</b-nav-item>
                     </template>
                 </client-only>
-                <b-nav-item to="plans">Cambiar plan 🔼</b-nav-item>
             </b-navbar-nav>
             <client-only>
                 <b-navbar-nav class="ml-auto">
@@ -24,7 +24,7 @@
                             <template #button-content>
                                 {{ $auth.user.name}}
                             </template>
-                            <b-dropdown-item href="">Mi cuenta</b-dropdown-item>
+                            <b-dropdown-item to="/dashboard">Mi cuenta</b-dropdown-item>
                             <b-dropdown-item href="#" @click.prevent="logout">Cerrar Sesión</b-dropdown-item>
                         </b-nav-item-dropdown>
                     </template>

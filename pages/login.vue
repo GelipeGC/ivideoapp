@@ -40,6 +40,10 @@
 
 <script>
 export default {
+    head: {
+        title: "Iniciar sesión",
+        lang: "es"
+    },
     data() {
         return {
             form: {

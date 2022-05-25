@@ -54,6 +54,10 @@
 
 <script>
 export default {
+    head: {
+        title: "Crear cuenta",
+        lang: "es"
+    },
     data() {
         return {
             form: {
@@ -67,6 +71,8 @@ export default {
     methods: {
         async register() {
             try {
+                await this.$axios.$get('/sanctum/csrf-cookie');
+
                 await this.$axios.post("/api/register", this.form);
 
                 //iniciar session despues de crear el usuario

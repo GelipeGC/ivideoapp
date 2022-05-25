@@ -1,5 +1,6 @@
 export const state = () => ({
-    files: []
+    files: [],
+    isFetchingFiles: false
 });
 
 export const mutations = {
@@ -11,19 +12,30 @@ export const mutations = {
     },
     REMOVE_FILE(state, uuid) {
         state.files = state.files.filter(file => file.uuid !== uuid);
+    },
+    SET_IS_FETCHING_FILES(state, value) {
+        state.isFetchingFiles = value
     }
 }
 
 export const getters = {
     files(state) {
         return state.files
+    },
+    isFetchingFiles(state) {
+        return state.isFetchingFiles
     }
+
 }
 
 export const actions = {
     async getFiles({ commit }) {
+        commit('SET_IS_FETCHING_FILES', true);
         const { data } = await this.$axios.$get('/api/files');
         commit('SET_FILES', data )
+
+        commit('SET_IS_FETCHING_FILES', false);
+
     },
     async deleteFile({ commit }, uuid) {
         await this.$axios.$delete(`/api/files/${uuid}`)
